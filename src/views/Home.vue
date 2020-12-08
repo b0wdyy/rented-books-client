@@ -1,18 +1,57 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
-  </div>
+    <div class="wrapper">
+        <div v-if="books && !loading" class="books">
+            <div v-for="book in books" :key="book.id">
+                <Book :book="book" />
+            </div>
+        </div>
+
+        <div v-else-if="!books && !loading">
+            <EmptyState />
+        </div>
+
+        <div v-else>
+            loading...
+        </div>
+
+        <div v-if="formVisible">
+            <Login />
+        </div>
+    </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
-
+import Book from "@/components/books/Book.vue";
+import EmptyState from "@/components/books/EmptyState.vue";
+import Login from "@/components/User/Login.vue";
 @Component({
-  components: {
-    HelloWorld
-  }
+    components: { Login, EmptyState, Book },
 })
-export default class Home extends Vue {}
+export default class Home extends Vue {
+    get books() {
+        return this.$store.getters.books;
+    }
+
+    get loading() {
+        return this.$store.getters.loading;
+    }
+
+    get formVisible() {
+        return this.$store.getters.formVisible;
+    }
+}
 </script>
+
+<style lang="scss" scoped>
+.books {
+    display: grid;
+    grid-template-columns: 1fr;
+
+    margin: 32px 0;
+
+    & > div {
+        justify-self: center;
+    }
+}
+</style>
