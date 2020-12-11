@@ -13,10 +13,6 @@
         <div v-else>
             loading...
         </div>
-
-        <div v-if="formVisible">
-            <Login />
-        </div>
     </div>
 </template>
 
@@ -24,9 +20,9 @@
 import { Component, Vue } from "vue-property-decorator";
 import Book from "@/components/books/Book.vue";
 import EmptyState from "@/components/books/EmptyState.vue";
-import Login from "@/components/User/Login.vue";
+
 @Component({
-    components: { Login, EmptyState, Book },
+    components: { EmptyState, Book },
 })
 export default class Home extends Vue {
     get books() {
@@ -35,10 +31,6 @@ export default class Home extends Vue {
 
     get loading() {
         return this.$store.getters.loading;
-    }
-
-    get formVisible() {
-        return this.$store.getters.formVisible;
     }
 }
 </script>

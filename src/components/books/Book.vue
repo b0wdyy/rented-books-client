@@ -3,7 +3,11 @@
         <h2 class="book__title">{{ book.title }}</h2>
         <img
             style="max-width: 100%; margin: 12px 0;"
-            src="../../assets/placeholder.png"
+            :src="
+                book.cover
+                    ? book.cover
+                    : require('../../assets/placeholder.png')
+            "
             alt="placeholder"
         />
         <p class="book__description">{{ book.description }}</p>
@@ -14,7 +18,7 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { Book } from "@/interfaces/book";
 
-@Component()
+@Component
 export default class extends Vue {
     @Prop({ required: true }) private book!: Book;
 }
