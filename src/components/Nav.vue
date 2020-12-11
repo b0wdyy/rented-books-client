@@ -1,12 +1,14 @@
 <template>
     <nav>
-        <h1>Library books</h1>
+        <h1><router-link to="/" exact>Library books</router-link></h1>
 
         <div v-if="user">
             <span class="login-button">Log out</span>
         </div>
         <div v-else>
-            <span class="login-button" @click="loginHandler">Log in</span>
+            <span class="login-button"
+                ><router-link to="/login" exact>Log in</router-link></span
+            >
         </div>
     </nav>
 </template>
@@ -14,11 +16,8 @@
 <script>
 import { Component, Vue } from "vue-property-decorator";
 
-@Component()
+@Component
 export default class extends Vue {
-    loginHandler() {
-        this.$store.dispatch("setFormVisible", "login");
-    }
     get user() {
         return this.$store.getters.user;
     }
@@ -48,6 +47,13 @@ nav {
         border: 1px solid $primary-text;
 
         cursor: pointer;
+
+        transition: 0.4s ease;
+
+        &:hover {
+            color: $white;
+            background: lighten($primary-text, 20);
+        }
     }
 }
 </style>

@@ -25,6 +25,13 @@ import EmptyState from "@/components/books/EmptyState.vue";
     components: { EmptyState, Book },
 })
 export default class Home extends Vue {
+    mounted() {
+        this.fetchData();
+    }
+    async fetchData() {
+        await this.$store.dispatch("fetchBooks");
+    }
+
     get books() {
         return this.$store.getters.books;
     }

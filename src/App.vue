@@ -14,14 +14,7 @@ import { Component, Vue } from "vue-property-decorator";
         Nav,
     },
 })
-export default class extends Vue {
-    mounted() {
-        this.fetchData();
-    }
-    async fetchData() {
-        await this.$store.dispatch("fetchBooks");
-    }
-}
+export default class extends Vue {}
 </script>
 
 <style lang="scss">
