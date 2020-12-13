@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper login">
         <h2>Welcome back!</h2>
-        <form @submit.prevent="login">
+        <form @submit.prevent="login" autocomplete="off">
             <div class="form-username">
                 <input
                     type="text"
@@ -28,7 +28,7 @@
                     Password is required
                 </div>
             </div>
-            <div v-if="error">{{ error }}</div>
+            <Error :message="error" />
             <input type="submit" :value="loading ? 'Loading...' : 'Login'" />
             <span
                 >Not an account yet?
@@ -40,9 +40,10 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from "vue-property-decorator";
-import Axios from "axios";
-
-@Component
+import Error from "@/components/Global/Error.vue";
+@Component({
+  components: {Error}
+})
 export default class extends Vue {
     usernameError = false;
     passwordError = false;
@@ -64,7 +65,11 @@ export default class extends Vue {
             username: this.username,
             password: this.password,
         });
-        await this.$router.push("/");
+        try {
+          await this.$router.push("/");
+        } catch (e) {
+          await this.$store.dispatch("setError", 'Unauthorized to go further.')
+        }
     }
 
     get loading() {

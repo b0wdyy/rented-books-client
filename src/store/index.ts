@@ -21,6 +21,10 @@ export default new Vuex.Store({
         SET_ERROR: (state, payload) => (state.error = payload),
     },
     actions: {
+        setError({commit}, payload) {
+            commit("SET_ERROR", payload);
+        },
+
         async fetchBooks({ commit }) {
             commit("SET_LOADING", true);
 
