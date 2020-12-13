@@ -1,5 +1,6 @@
 import { Book } from "@/interfaces/book";
 import { User } from "@/interfaces/user";
+import qs from "querystring";
 import Axios from "axios";
 import Vue from "vue";
 import Vuex from "vuex";
@@ -10,15 +11,14 @@ export default new Vuex.Store({
     state: {
         user: null as User | null,
         books: [] as Book[],
+        error: null,
         loading: false,
-        formVisible: false,
-        signupVisible: false,
     },
     mutations: {
+        SET_USER: (state, payload) => (state.user = payload),
         SET_LOADING: (state, payload) => (state.loading = payload),
         SET_BOOKS: (state, payload) => (state.books = payload),
-        SET_LOGIN_FORM: (state, payload) => (state.formVisible = payload),
-        SET_SIGNUP_FORM: (state, payload) => (state.signupVisible = payload),
+        SET_ERROR: (state, payload) => (state.error = payload),
     },
     actions: {
         async fetchBooks({ commit }) {
@@ -42,26 +42,42 @@ export default new Vuex.Store({
             commit("SET_LOADING", false);
         },
 
-        setFormVisible({ commit }, payload) {
-            switch (payload) {
-                case "login":
-                    commit("SET_LOGIN_FORM", true);
-                    commit("SET_SIGNUP_FORM", false);
-                    break;
-                case "signup":
-                    commit("SET_SIGNUP_FORM", true);
-                    commit("SET_LOGIN_FORM", false);
-                    break;
-                default:
-                    commit("SET_LOGIN_FORM", true);
+        async loginUser({ commit }, payload) {
+            commit("SET_LOADING", true);
+
+            const values = {
+                username: payload.username,
+                password: payload.password,
+            };
+            const config = {
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+            };
+
+            try {
+                const { data } = await Axios.post(
+                    `${process.env.VUE_APP_BASE_URL}/users/login`,
+                    qs.stringify(values),
+                    config
+                );
+                commit("SET_USER", data);
+                commit("SET_LOADING", false);
+            } catch (e) {
+                console.log(e);
+                commit("SET_ERROR", e.msg);
+                commit("SET_LOADING", false);
             }
+        },
+
+        logout({ commit }) {
+            commit("SET_USER", null);
         },
     },
     getters: {
         user: state => state.user,
         books: state => state.books,
         loading: state => state.loading,
-        formVisible: state => state.formVisible,
-        signupVisible: state => state.signupVisible,
+        error: state => state.error,
     },
 });

@@ -14,7 +14,8 @@ import { Component, Vue } from "vue-property-decorator";
         Nav,
     },
 })
-export default class extends Vue {}
+export default class extends Vue {
+}
 </script>
 
 <style lang="scss">

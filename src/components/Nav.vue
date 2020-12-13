@@ -1,14 +1,16 @@
 <template>
     <nav>
         <h1><router-link to="/" exact>Library books</router-link></h1>
-
-        <div v-if="user">
+        <div v-if="user" @click="logout">
             <span class="login-button">Log out</span>
         </div>
+
         <div v-else>
-            <span class="login-button"
-                ><router-link to="/login" exact>Log in</router-link></span
-            >
+            <div v-if="currentRouterName !== 'Login'">
+                <span class="login-button"
+                    ><router-link to="/login" exact>Log in</router-link></span
+                >
+            </div>
         </div>
     </nav>
 </template>
@@ -18,8 +20,16 @@ import { Component, Vue } from "vue-property-decorator";
 
 @Component
 export default class extends Vue {
+    logout() {
+        this.$store.dispatch("logout");
+        this.$router.push("/login");
+    }
     get user() {
         return this.$store.getters.user;
+    }
+
+    get currentRouterName() {
+        return this.$route.name;
     }
 }
 </script>
