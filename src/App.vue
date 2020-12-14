@@ -1,5 +1,6 @@
 <template>
     <div id="app">
+        <flash-message />
         <Nav />
         <router-view />
         <bottom-nav />
@@ -10,9 +11,11 @@
 import Nav from "@/components/Nav.vue";
 import { Component, Vue } from "vue-property-decorator";
 import BottomNav from "@/components/BottomNav.vue";
+import FlashMessage from "@/components/FlashMessage/FlashMessage.vue";
 
 @Component({
     components: {
+        FlashMessage,
         BottomNav,
         Nav,
     },

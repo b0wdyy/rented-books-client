@@ -4,6 +4,7 @@ import qs from "querystring";
 import Axios from "axios";
 import Vue from "vue";
 import Vuex from "vuex";
+import { FlashMessage } from "@/interfaces/flashMessage";
 
 Vue.use(Vuex);
 
@@ -14,6 +15,7 @@ export default new Vuex.Store({
         token: null,
         error: null,
         loading: false,
+        flashMessage: null as FlashMessage | null,
     },
     mutations: {
         SET_USER: (state, payload) => (state.user = payload),
@@ -21,6 +23,7 @@ export default new Vuex.Store({
         SET_LOADING: (state, payload) => (state.loading = payload),
         SET_BOOKS: (state, payload) => (state.books = payload),
         SET_ERROR: (state, payload) => (state.error = payload),
+        SET_FLASH: (state, payload) => (state.flashMessage = payload),
     },
     actions: {
         setError({ commit }, payload) {
@@ -71,12 +74,22 @@ export default new Vuex.Store({
                     qs.stringify(values),
                     config
                 );
+                commit("SET_FLASH", { type: "success", message: data.msg });
+
+                setTimeout(() => {
+                    commit("SET_FLASH", null);
+                }, 3000);
 
                 commit("SET_TOKEN", data.token);
                 commit("SET_USER", data.user);
                 commit("SET_LOADING", false);
             } catch (e) {
-                console.log(e);
+                console.log(e.msg);
+                commit("SET_FLASH", { type: "error", message: e.msg });
+
+                setTimeout(() => {
+                    commit("SET_FLASH", null);
+                }, 3000);
 
                 commit("SET_ERROR", e.msg);
                 commit("SET_LOADING", false);
@@ -86,9 +99,18 @@ export default new Vuex.Store({
         logout({ commit }) {
             commit("SET_TOKEN", null);
             commit("SET_USER", null);
+            commit("SET_FLASH", {
+                type: "success",
+                message: "User successfully logged out.",
+            });
+
+            setTimeout(() => {
+                commit("SET_FLASH", null);
+            }, 3000);
         },
 
         async addBook({ commit }, payload) {
+            commit("SET_LOADING", true);
             const formData = new FormData();
             formData.append("title", payload.title);
             formData.append("description", payload.description);
@@ -107,12 +129,21 @@ export default new Vuex.Store({
                     formData,
                     headers
                 );
+                commit("SET_FLASH", { type: "success", message: data.msg });
 
-                console.log(data);
+                setTimeout(() => {
+                    commit("SET_FLASH", null);
+                }, 3000);
+
+                commit("SET_LOADING", false);
             } catch (e) {
                 console.error(e);
+                commit("SET_FLASH", { type: "error", message: e.msg });
+                setTimeout(() => {
+                    commit("SET_FLASH", null);
+                }, 3000);
+                commit("SET_LOADING", false);
             }
-            // commit("ADD_BOOKS");
         },
     },
     getters: {
@@ -121,5 +152,6 @@ export default new Vuex.Store({
         token: state => state.token,
         loading: state => state.loading,
         error: state => state.error,
+        flashMessage: state => state.flashMessage,
     },
 });

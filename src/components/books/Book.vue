@@ -1,16 +1,17 @@
 <template>
     <section class="book">
         <h2 class="book__title">{{ book.title }}</h2>
-        <img
-            style="max-width: 100%; margin: 12px 0;"
-            :src="
-                book.cover
-                    ? book.cover
-                    : require('../../assets/placeholder.png')
-            "
-            alt="placeholder"
-        />
-        <p class="book__description">{{ book.description }}</p>
+        <router-link :to="{ name: 'BookDetail', params: { id: book._id } }">
+            <img
+                style="max-width: 100%; margin: 12px 0;"
+                :src="
+                    book.cover
+                        ? book.cover
+                        : require('../../assets/placeholder.png')
+                "
+                alt="placeholder"
+            />
+        </router-link>
     </section>
 </template>
 
@@ -32,6 +33,10 @@ section.book {
         font-size: 20px;
 
         color: $secondary-text;
+    }
+
+    &:last-child {
+        margin-bottom: 12vh;
     }
 }
 </style>

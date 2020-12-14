@@ -44,13 +44,13 @@ nav {
 
         border-radius: 50%;
 
-        height: 80px;
-        width: 80px;
+        height: 64px;
+        width: 64px;
 
         display: flex;
         align-items: center;
         justify-content: center;
-        transform: translateY(-40%);
+        transform: translateY(-45%);
     }
 }
 </style>
