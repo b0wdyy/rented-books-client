@@ -25,7 +25,9 @@ export default class extends Vue {
 </script>
 
 <style lang="scss">
-.book {
+section.book {
+    margin: 24px 0;
+
     .book__title {
         font-size: 20px;
 

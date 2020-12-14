@@ -4,6 +4,7 @@ import Home from "@/views/Home.vue";
 import Login from "@/views/Login.vue";
 import Signup from "@/views/Signup.vue";
 import Book from "@/views/Book.vue";
+import AddBook from "@/views/AddBook.vue";
 import store from "@/store/index";
 
 Vue.use(VueRouter);
@@ -21,6 +22,12 @@ const routes: Array<RouteConfig> = [
         path: "/",
         name: "Home",
         component: Home,
+        beforeEnter: checkAuth,
+    },
+    {
+        path: "/book/add",
+        name: "AddBook",
+        component: AddBook,
         beforeEnter: checkAuth,
     },
     {

@@ -1,6 +1,5 @@
 <template>
     <div class="wrapper">
-      <h2>Hello {{name}}</h2>
         <div v-if="books && !loading" class="books">
             <div v-for="book in books" :key="book.id">
                 <Book :book="book" />
@@ -28,19 +27,17 @@ import EmptyState from "@/components/books/EmptyState.vue";
 export default class Home extends Vue {
     mounted() {
         this.fetchData();
-
-        console.log(this.user)
     }
     async fetchData() {
-        await this.$store.dispatch("fetchBooks");
+        await this.$store.dispatch("fetchBooks", this.user);
     }
 
     get user() {
-      return this.$store.getters.user.user;
+        return this.$store.getters.user;
     }
 
     get name() {
-      return `${this.user.name} ${this.user.lastName}`
+        return `${this.user.name} ${this.user.lastName}`;
     }
 
     get books() {

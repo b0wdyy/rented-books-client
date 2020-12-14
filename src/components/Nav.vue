@@ -1,16 +1,10 @@
 <template>
     <nav>
         <h1><router-link to="/" exact>Library books</router-link></h1>
-        <div v-if="user" @click="logout">
-            <span class="login-button">Log out</span>
-        </div>
-
-        <div v-else>
-            <div v-if="currentRouterName !== 'Login'">
-                <span class="login-button"
-                    ><router-link to="/login" exact>Log in</router-link></span
-                >
-            </div>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
     </nav>
 </template>
@@ -47,6 +41,35 @@ nav {
 
     h1 {
         font-size: 24px;
+    }
+
+    .hamburger {
+        transform: rotate(-45deg);
+
+        height: 20px;
+        width: 30px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        span {
+            display: inline-block;
+            height: 4px;
+
+            background: $primary-text;
+
+            border-radius: 10px;
+
+            &:nth-child(1),
+            &:nth-child(3) {
+                width: 70%;
+            }
+
+            &:nth-child(2) {
+                width: 100%;
+            }
+        }
     }
 
     .login-button {

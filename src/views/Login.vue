@@ -42,7 +42,7 @@
 import { Component, Vue, Watch } from "vue-property-decorator";
 import Error from "@/components/Global/Error.vue";
 @Component({
-  components: {Error}
+    components: { Error },
 })
 export default class extends Vue {
     usernameError = false;
@@ -66,9 +66,12 @@ export default class extends Vue {
             password: this.password,
         });
         try {
-          await this.$router.push("/");
+            await this.$router.push("/");
         } catch (e) {
-          await this.$store.dispatch("setError", 'Unauthorized to go further.')
+            await this.$store.dispatch(
+                "setError",
+                "Unauthorized to go further."
+            );
         }
     }
 
