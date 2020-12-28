@@ -70,7 +70,7 @@ export default new Vuex.Store({
 
             try {
                 const { data } = await Axios.post(
-                    `api.bowdy.dev/api/v1/users/login`,
+                    `test`,
                     qs.stringify(values),
                     config
                 );
