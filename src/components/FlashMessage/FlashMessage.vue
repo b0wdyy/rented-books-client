@@ -49,7 +49,7 @@ export default class extends Vue {
     align-items: center;
 
     width: 280px;
-    padding: 40px 0;
+    padding: 40px 20px;
 
     color: $white;
     background: red;
