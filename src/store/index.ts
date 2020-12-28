@@ -36,7 +36,7 @@ export default new Vuex.Store({
             try {
                 const { data } = await Axios.request({
                     method: "GET",
-                    url: `${process.env.VUE_APP_BASE_URL}/books`,
+                    url: `api.bowdy.dev/api/v1/books`,
                     headers: {
                         "Access-Control-Allow-Origin": "*",
                         "Content-Type": "application/x-www-form-urlencoded",
@@ -70,7 +70,7 @@ export default new Vuex.Store({
 
             try {
                 const { data } = await Axios.post(
-                    `${process.env.VUE_APP_BASE_URL}/users/login`,
+                    `api.bowdy.dev/api/v1/users/login`,
                     qs.stringify(values),
                     config
                 );
@@ -125,7 +125,7 @@ export default new Vuex.Store({
             };
             try {
                 const { data } = await Axios.post(
-                    `${process.env.VUE_APP_BASE_URL}/books`,
+                    `api.bowdy.dev/api/v1/books`,
                     formData,
                     headers
                 );
