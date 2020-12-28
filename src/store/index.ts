@@ -137,8 +137,10 @@ export default new Vuex.Store({
 
                 commit("SET_LOADING", false);
             } catch (e) {
-                console.error(e);
-                commit("SET_FLASH", { type: "error", message: e.msg });
+                commit("SET_FLASH", {
+                    type: "error",
+                    message: "Something went wron, try again!",
+                });
                 setTimeout(() => {
                     commit("SET_FLASH", null);
                 }, 3000);
